@@ -178,6 +178,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+        * Customize
+        */
+        JeroenNoten\LaravelAdminLte\ServiceProvider::class,
     ],
 
     /*
