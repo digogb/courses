@@ -139,9 +139,6 @@
 
 
 <style type="text/css">
-    .logo-lg:before{
-        content: '\F0D6';
-        font-family: FontAwesome;
-    }
+    
 
 </style>

@@ -182,6 +182,7 @@ return [
         * Customize
         */
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
     ],
 
     /*
