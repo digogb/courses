@@ -15,4 +15,6 @@
         @component('widgets.value-box', ['cols'=>explodeDivColumns('12 4'), 'color'=>'blue', 'icon'=>'money', 'value'=>'R$ 0', 'text'=>'Valor Consolidado'])
         @endcomponent
 	</div>
+
+	<a class="button" href="/teste">teste</a>
 @stop

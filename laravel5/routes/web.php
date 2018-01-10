@@ -11,14 +11,14 @@
 |
 */
 
+use App\BillingCycle;
+
 Route::get('/', function () {
     return view('\vendor\adminlte\login');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/billingCycles','BillingCycleController@index');

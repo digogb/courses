@@ -112,17 +112,17 @@ return [
     'menu' => [
         [
             'text'        => 'Dashboard',
-            'url'         => 'admin/pages',
+            'url'         => 'home',
             'icon'        => 'fa fa-dashboard',
         ],
         [
             'text' => 'Cadastro',
-            'url'  => 'admin/settings',
+            'url'  => '',
             'icon' => 'fa fa-edit',
             'submenu' => [
                 [
                    'text' => 'Ciclos de Pagamentos',
-                   'url'  => 'admin/settings',
+                   'url'  => 'billingCycles',
                    'icon' => 'fa fa-usd',
                 ]   
             ]
