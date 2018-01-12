@@ -22,3 +22,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::get('/billingCycles','BillingCycleController@index');
+Route::get('/billingCycles/remove/{id}','BillingCycleController@remove');
+Route::get('/billingCycles/update/{id}','BillingCycleController@update');

@@ -126,9 +126,17 @@
         </div>
         <!-- /.content-wrapper -->
 
+        <footer class="main-footer">
+            <strong>Copyright © 2017
+                <a href="http://cod3r.com.br" target="_blank"> Cod3r</a>.
+            </strong>
+        </footer>
+
     </div>
     <!-- ./wrapper -->
+
 @stop
+
 
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/app.min.js') }}"></script>
@@ -139,6 +147,15 @@
 
 
 <style type="text/css">
-    
+
+
+    .table-actions {
+         width:150px;
+    }
+
+    button {
+         margin-left: 5px;
+    }
+
 
 </style>
