@@ -14,10 +14,14 @@ class CreateTableBillingCycles extends Migration
     public function up()
     {
         Schema::create('billing_cycles', function (Blueprint $table) {
+
             $table->increments('id')->unsigned()->unique();
             $table->string('name');
             $table->integer('month',false,true)->length(2);
             $table->integer('year',false,true)->length(4);
+            $table->integer('user_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users');   
         });
     }
 

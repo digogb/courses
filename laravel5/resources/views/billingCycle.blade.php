@@ -43,10 +43,3 @@
 	</div>
 @stop
 
-<script type="text/javascript">
-    
-    function addRow() {
-        $('#tDebit').append("<tr><td><input name='cName' class='form-control' placeholder='Informe o nome'></td><td><input name='cValue' class='form-control' placeholder='Informe o valor'></td><td><input name='cStats' class='form-control' placeholder='Informe o status'></td><td><button onclick='addRow();' type='button' class='btn btn-success'><i class='fa fa-plus'></i></button><button type='button' class='btn btn-warning'><i class='fa fa-clone'></i></button><button type='button' class='btn btn-danger'><i class='fa fa-trash-o'></i></button></td></tr>");
-    }
-
-</script>

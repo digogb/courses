@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableEntries extends Migration
+class CreateDebitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateTableEntries extends Migration
      */
     public function up()
     {
-        Schema::create('entries', function (Blueprint $table) {
-            
+        Schema::create('debits', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('bcycle_id')->unsigned();
             $table->string('name');
             $table->float('value');
-            $table->enum('type', array('D','C'));
+            $table->enum('status', array('Pago', 'Pendente', 'Cancelado'))->nullable();
 
             $table->foreign('bcycle_id')->references('id')->on('billing_cycles');   
 
@@ -32,6 +32,6 @@ class CreateTableEntries extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('debits');
     }
 }
