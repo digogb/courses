@@ -74,7 +74,7 @@ class BillingCycleController extends Controller
                 array_push($creditsPopulated, $newCredit);
             }
 
-            $billingCycle->credits = $creditsPopulated;
+            $billingCycle->credits->add($creditsPopulated);
         }    
 
         if(isset($debits)) {
@@ -86,7 +86,7 @@ class BillingCycleController extends Controller
                 array_push($debitsPopulated, $newDebit);
             }
 
-            $billingCycle->debits = $debitsPopulated;
+            $billingCycle->debits->add($debitsPopulated);
         }    
 
         return $billingCycle;
