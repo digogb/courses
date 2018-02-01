@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Billingcycle;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $billingCycles = BillingCycle::all();
+
+        $totalCredits = 0;
+        $totalDebits = 0;
+        $total = 0;
+
+        foreach($billingCycles as $billingCycle){
+            $totalCredits += $billingCycle->getTotalCredits();
+            $totalDebits += $billingCycle->getTotalDebits();
+        }
+
+        $total = $totalCredits - $totalDebits;
+
+        return view('home', compact('total','totalCredits','totalDebits'));
     }
 }

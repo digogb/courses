@@ -1,5 +1,5 @@
 @php
-	$fieldValue = (isset($value) ? $value : '' );	
+	$fieldValue = (isset($fieldValue) ? $fieldValue : '' );	
 @endphp
 <div class="col {{$cols}}" >
 	<div class="form-group">

@@ -26,4 +26,19 @@ class BillingCycle extends Model
 		return $this->belongsTo('App\User', 'user_id');	
 	}
 
+	public function getTotalCredits(){
+
+		return (float)$this->credits->sum('value');	
+	}
+
+	public function getTotalDebits(){
+
+		return (float)$this->debits->sum('value');	
+	}
+
+	public function getTotal(){
+
+		return $this->getTotalCredits() - $this->getTotalDebits();	
+	}
+
 }

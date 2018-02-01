@@ -33,7 +33,7 @@
             <div class='tab-content'>
                 @if($tab != 'tabUpdate') 
                     @include('widgets.tabList',[ 'tab'=> $tab , 'billingCycles' => $billingCycles])
-                    @include('widgets.tabCreate',[ 'tab'=> $tab ])
+                    @include('widgets.tabCreate',[ 'tab'=> $tab, 'billingCycle' =>$billingCycle])
                 @endif    
                 @if($tab == 'tabUpdate')
                     @include('widgets.tabUpdate',[ 'tab'=> $tab, 'billingCycle' => $billingCycle ])
