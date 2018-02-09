@@ -25,7 +25,7 @@
 
             <div class="col col-xs-12 col-sm-6">
                 <fieldset>
-                  @include('widgets.creditsFieldset', ['billingCycle'=>$billingCycle])
+                  @include('widgets.creditsFieldset', ['billingCycle'=>$billingCycle, 'tab'=>$tab])
                 </fieldset>
                 <div class="row">
 

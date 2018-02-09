@@ -20,7 +20,7 @@
                     <td>{{$billingCycle->month}}</td>
                     <td>{{$billingCycle->year}}</td>
                     <td>                                        
-                        <a class="btn btn-warning" href="/billingCycles/update/{{$billingCycle->id}}"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-warning" href="/billingCycles/find/{{$billingCycle->id}}"><i class="fa fa-pencil"></i></a>
                         <a class="btn btn-danger" href="/billingCycles/remove/{{$billingCycle->id}}"><i class="fa fa-trash-o"></i></a>
                     </td>
                 </tr>

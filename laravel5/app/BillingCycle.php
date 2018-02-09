@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BillingCycle extends Model
 {
     
-	protected $fillable = ['name', 'month', 'year', 'user_id', 'credits', 'debits' ];
+	protected $fillable = [ 'id','name', 'month', 'year', 'user_id', 'credits', 'debits' ];
 
 	public $timestamps = false;
 

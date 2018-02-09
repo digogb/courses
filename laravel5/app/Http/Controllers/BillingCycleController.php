@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use App\BillingCycle;
 use App\Credit;
 use App\Debit;
@@ -17,16 +18,16 @@ class BillingCycleController extends Controller
             $billingCycle = new BillingCycle;
         }
 
-    	return view('billingCycle', compact('billingCycles','tab', 'billingCycle'));
+        return view('billingCycle', compact('billingCycles','tab', 'billingCycle'));    
+    	
     }
 
-    public function update($id){
+    public function find($id){
 
-    	$billingCycles = BillingCycle::all();
-    	$billingCycle = BillingCycle::find($id);    	
+    	$billingCycle = BillingCycle::find($id);
     	$tab = 'tabUpdate';
 
-    	return view('billingCycle', compact('billingCycles', 'billingCycle','tab'));
+       	return view('billingCycle', compact('billingCycle','tab'));
     }
 
     public function remove($id){
@@ -34,14 +35,18 @@ class BillingCycleController extends Controller
     	dd($id);
     }
 
-    public function addCreditRow(Request $request){
+    public function addCreditRow($tab, Request $request){
 
         $billingCycle = $this->fillEntities($request);
 
         $row = new Credit;
         $billingCycle->credits->add($row);
 
-        return $this->index('tabCreate', $billingCycle);
+        if($tab == 'tabCreate'){
+            return $this->index($tab, $billingCycle);    
+        } elseif($tab = 'tabUpdate'){
+            return view('billingCycle', compact('billingCycle','tab'));
+        }
 
     }
 
@@ -126,11 +131,11 @@ class BillingCycleController extends Controller
 
         $billingCycle = $this->fillBillingCycle($request->except('credits','debits'));
 
-
         $credits = $this->fillCredits($request->input('credits'));
         $debits = $this->fillDebits($request->input('debits'));
-          
 
+        $billingCycle->credits = collect([]);;
+        $billingCycle->debits = collect([]);;
         foreach($credits as $credit) {
             $billingCycle->credits->add($credit);    
         }
@@ -138,7 +143,7 @@ class BillingCycleController extends Controller
         foreach($debits as $debit) {
             $billingCycle->debits->add($debit);
         }
-        
+       
         return $billingCycle;
     }
 
