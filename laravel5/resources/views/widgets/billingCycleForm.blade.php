@@ -1,6 +1,7 @@
 <form action="{{$urlAction}}" method="POST">
 
         {{csrf_field()}}
+        <input type="hidden" name="tab" value="{{$tab}}">
         <div class="box-body">
             @include('widgets.field', ['cols'=>explodeDivColumns('12 4'), 'label'=>'Nome', 'name'=>'name', 'placeHolder'=>'Informe o  nome', 'fieldValue'=>$billingCycle->name, 'readOnly'=>'false'])
 

@@ -1,6 +1,5 @@
-@php
-    session(['tab'=>$tab]);
-@endphp
-<div class="tab-pane" id="tabUpdate">
-  @include('widgets.billingCycleForm',['urlAction'=>'/billingCycles/update', 'tab'=>'tabUpdate', 'buttonName'=>'Atualizar'])
-</div>
+@if( $tab == 'tabUpdate')
+  <div class="tab-pane active" id="tabUpdate">
+        @include('widgets.billingCycleForm',['urlAction'=>'/billingCycles/update', 'tab'=>'tabUpdate', 'buttonName'=>'Atualizar'])
+  </div>
+@endif

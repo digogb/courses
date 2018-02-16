@@ -18,16 +18,14 @@ class BillingCycleController extends Controller
             $billingCycle = new BillingCycle;
         }
 
-        //session(['tab' => $tab]);
-        return view('billingCycle', compact('billingCycles','tab', 'billingCycle'));    
+        return view('billingCycle', compact('billingCycles', 'tab', 'billingCycle'));    
     	
     }
 
     public function find($id){
 
+        $tab = 'tabUpdate';
     	$billingCycle = BillingCycle::find($id);
-    	session(['tab' => 'tabUpdate']);
-
        	return view('billingCycle', compact('billingCycle','tab'));
     }
 
@@ -38,85 +36,75 @@ class BillingCycleController extends Controller
 
     public function addCreditRow(Request $request){
 
-        dd(session('tab'));
+        $tab = $request->input('tab');
 
         $billingCycle = $this->fillEntities($request);
 
         $row = new Credit;
         $billingCycle->credits->push($row);
 
-        return $this->index(session('tab'), $billingCycle);    
+        return $this->index($tab, $billingCycle);
     }
 
     public function addDebitRow(Request $request){
+
+        $tab = $request->input('tab');
 
         $billingCycle = $this->fillEntities($request);
 
         $row = new Debit;
         $billingCycle->debits->push($row);
 
-        if($tab == 'tabCreate'){
-            return $this->index($tab, $billingCycle);    
-        } else if($tab = 'tabUpdate'){
-            return view('billingCycle', compact('billingCycle','tab'));
-        }
+        return $this->index($tab, $billingCycle);
     }
 
     public function cloneCredit($index, Request $request){
        
+        $tab = $request->input('tab');
+
         $billingCycle = $this->fillEntities($request);
 
         $credit = $billingCycle->credits->get($index);
 
         $billingCycle->credits->push($credit);
 
-        if($tab == 'tabCreate'){
-            return $this->index($tab, $billingCycle);    
-        } else if($tab = 'tabUpdate'){
-            return view('billingCycle', compact('billingCycle','tab'));
-        }
+        return $this->index($tab, $billingCycle);
     }
 
     public function cloneDebit($index, Request $request){
        
+        $tab = $request->input('tab');
+
         $billingCycle = $this->fillEntities($request);
 
         $debit = $billingCycle->debits->get($index);
 
         $billingCycle->debits->push($debit);
 
-        if($tab == 'tabCreate'){
-            return $this->index($tab, $billingCycle);    
-        } else if($tab = 'tabUpdate'){
-            return view('billingCycle', compact('billingCycle','tab'));
-        }
+        return $this->index($tab, $billingCycle);
     }
 
 
     public function remCreditRow($index, Request $request){
 
+        $tab = $request->input('tab');
+
         $billingCycle = $this->fillEntities($request);
 
         $billingCycle->credits->pull($index);
 
-        if($tab == 'tabCreate'){
-            return $this->index($tab, $billingCycle);    
-        } else if($tab = 'tabUpdate'){
-            return view('billingCycle', compact('billingCycle','tab'));
-        }
+        return $this->index($tab, $billingCycle);
     }
 
     public function remDebitRow($index, Request $request){
+
+        $tab = $request->input('tab');
 
         $billingCycle = $this->fillEntities($request);
 
         $billingCycle->debits->pull($index);
 
-        if($tab == 'tabCreate'){
-            return $this->index($tab, $billingCycle);    
-        } else if($tab = 'tabUpdate'){
-            return view('billingCycle', compact('billingCycle','tab'));
-        }
+        return $this->index($tab, $billingCycle);        
     }
 
 
