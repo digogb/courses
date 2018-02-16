@@ -25,9 +25,9 @@ Route::get('/billingCycles','BillingCycleController@index');
 Route::get('/billingCycles/remove/{id}','BillingCycleController@remove');
 Route::get('/billingCycles/find/{id}','BillingCycleController@find');
 Route::post('/billingCycles/store','BillingCycleController@store');
-Route::get('/billingCycles/update','BillingCycleController@update');
+Route::post('/billingCycles/update','BillingCycleController@update');
 
-Route::post('/billingCycles/addCreditRow/{tab}','BillingCycleController@addCreditRow');
+Route::post('/billingCycles/addCreditRow','BillingCycleController@addCreditRow');
 Route::post('/billingCycles/cloneCredit/{index}','BillingCycleController@cloneCredit');
 Route::post('/billingCycles/remCreditRow/{index}','BillingCycleController@remCreditRow');
 

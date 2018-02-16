@@ -18,6 +18,7 @@ class BillingCycleController extends Controller
             $billingCycle = new BillingCycle;
         }
 
+        //session(['tab' => $tab]);
         return view('billingCycle', compact('billingCycles','tab', 'billingCycle'));    
     	
     }
@@ -25,7 +26,7 @@ class BillingCycleController extends Controller
     public function find($id){
 
     	$billingCycle = BillingCycle::find($id);
-    	$tab = 'tabUpdate';
+    	session(['tab' => 'tabUpdate']);
 
        	return view('billingCycle', compact('billingCycle','tab'));
     }
@@ -35,19 +36,16 @@ class BillingCycleController extends Controller
     	dd($id);
     }
 
-    public function addCreditRow($tab, Request $request){
+    public function addCreditRow(Request $request){
+
+        dd(session('tab'));
 
         $billingCycle = $this->fillEntities($request);
 
         $row = new Credit;
-        $billingCycle->credits->add($row);
+        $billingCycle->credits->push($row);
 
-        if($tab == 'tabCreate'){
-            return $this->index($tab, $billingCycle);    
-        } elseif($tab = 'tabUpdate'){
-            return view('billingCycle', compact('billingCycle','tab'));
-        }
-
+        return $this->index(session('tab'), $billingCycle);    
     }
 
     public function addDebitRow(Request $request){
@@ -55,10 +53,13 @@ class BillingCycleController extends Controller
         $billingCycle = $this->fillEntities($request);
 
         $row = new Debit;
-        $billingCycle->debits->add($row);
+        $billingCycle->debits->push($row);
 
-        return $this->index('tabCreate', $billingCycle);
-
+        if($tab == 'tabCreate'){
+            return $this->index($tab, $billingCycle);    
+        } else if($tab = 'tabUpdate'){
+            return view('billingCycle', compact('billingCycle','tab'));
+        }
     }
 
     public function cloneCredit($index, Request $request){
@@ -67,10 +68,13 @@ class BillingCycleController extends Controller
 
         $credit = $billingCycle->credits->get($index);
 
-        $billingCycle->credits->add($credit);
+        $billingCycle->credits->push($credit);
 
-        return $this->index('tabCreate', $billingCycle);
-
+        if($tab == 'tabCreate'){
+            return $this->index($tab, $billingCycle);    
+        } else if($tab = 'tabUpdate'){
+            return view('billingCycle', compact('billingCycle','tab'));
+        }
     }
 
     public function cloneDebit($index, Request $request){
@@ -79,10 +83,13 @@ class BillingCycleController extends Controller
 
         $debit = $billingCycle->debits->get($index);
 
-        $billingCycle->debits->add($debit);
+        $billingCycle->debits->push($debit);
 
-        return $this->index('tabCreate', $billingCycle);
-
+        if($tab == 'tabCreate'){
+            return $this->index($tab, $billingCycle);    
+        } else if($tab = 'tabUpdate'){
+            return view('billingCycle', compact('billingCycle','tab'));
+        }
     }
 
 
@@ -92,8 +99,11 @@ class BillingCycleController extends Controller
 
         $billingCycle->credits->pull($index);
 
-        return $this->index('tabCreate', $billingCycle);
-
+        if($tab == 'tabCreate'){
+            return $this->index($tab, $billingCycle);    
+        } else if($tab = 'tabUpdate'){
+            return view('billingCycle', compact('billingCycle','tab'));
+        }
     }
 
     public function remDebitRow($index, Request $request){
@@ -102,8 +112,11 @@ class BillingCycleController extends Controller
 
         $billingCycle->debits->pull($index);
 
-        return $this->index('tabCreate', $billingCycle);
-
+        if($tab == 'tabCreate'){
+            return $this->index($tab, $billingCycle);    
+        } else if($tab = 'tabUpdate'){
+            return view('billingCycle', compact('billingCycle','tab'));
+        }
     }
 
 
@@ -127,23 +140,28 @@ class BillingCycleController extends Controller
         return $this->index();
     }
 
-    private function fillEntities($request){
 
-        $billingCycle = $this->fillBillingCycle($request->except('credits','debits'));
+    public function update(Request $request){
+
+        $billingCycle = $this->fillEntities($request);
 
         $credits = $this->fillCredits($request->input('credits'));
         $debits = $this->fillDebits($request->input('debits'));
 
-        $billingCycle->credits = collect([]);;
-        $billingCycle->debits = collect([]);;
-        foreach($credits as $credit) {
-            $billingCycle->credits->add($credit);    
-        }
+        $billingCycle->credits()->update($credits);
 
-        foreach($debits as $debit) {
-            $billingCycle->debits->add($debit);
-        }
-       
+        return $this->index();
+    }
+
+
+
+    private function fillEntities($request){
+
+        $billingCycle = $this->fillBillingCycle($request->except('credits','debits'));
+
+        $billingCycle->credits = collect($this->fillCredits($request->input('credits')));        
+        $billingCycle->debits = collect($this->fillDebits($request->input('debits')));
+        
         return $billingCycle;
     }
 

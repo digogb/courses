@@ -10,34 +10,22 @@
     <div class="row">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs"> 
-                @if( $tab == 'tabList' )
                     <li class="active">
-                @else
-                    <li>       
-                @endif     
                         <a href="#tabList" data-toggle='tab'><i class='fa fa-bars'></i> Listar</a>
                     </li>
-                @if( $tab == 'tabCreate')
-                    <li class="active">
-                @else
                     <li>        
-                @endif    
                         <a href="#tabCreate" data-toggle='tab'><i class='fa fa-plus'></i> Incluir</a>
                     </li>
-                @if( $tab == 'tabUpdate')
-                    <li class="active">
+
+                    <li>
                         <a href="#tabUpdate" data-toggle='tab' aria-expanded='true'><i class='fa fa-pencil'></i> Alterar</a>
                     </li>    
-                @endif        
+
             </ul>
             <div class='tab-content'>
-                @if($tab != 'tabUpdate') 
-                    @include('widgets.tabList',[ 'tab'=> $tab , 'billingCycles' => $billingCycles])
-                    @include('widgets.tabCreate',[ 'tab'=> $tab, 'billingCycle' =>$billingCycle])
-                @endif    
-                @if($tab == 'tabUpdate')
-                    @include('widgets.tabUpdate',[ 'tab'=> $tab, 'billingCycle' => $billingCycle ])
-                @endif    
+                @include('widgets.tabList',[ 'tab'=> 'tabList' , 'billingCycles' => $billingCycles])
+                @include('widgets.tabCreate',[ 'tab'=> 'tabCreate', 'billingCycle' =>$billingCycle])
+                @include('widgets.tabUpdate',[ 'tab'=> 'tabUpdate', 'billingCycle' => $billingCycle ])
             </div>
         </div>
 	</div>

@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($billingCycles as $billingCycle)
+                @forelse($billingCycles as $billingCycle)
                 <tr>
                     <td>{{$billingCycle->name}}</td>
                     <td>{{$billingCycle->month}}</td>
@@ -24,7 +24,8 @@
                         <a class="btn btn-danger" href="/billingCycles/remove/{{$billingCycle->id}}"><i class="fa fa-trash-o"></i></a>
                     </td>
                 </tr>
-               @endforeach 
+                @empty
+               @endforelse
             </tbody>
         </table>
     </div>
