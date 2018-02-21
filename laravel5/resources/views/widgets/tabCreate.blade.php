@@ -3,5 +3,5 @@
 @else
     <div class="tab-pane" id="tabCreate">
 @endif
-        @include('widgets.billingCycleForm',['urlAction'=>'/billingCycles/store', 'tab'=>'tabCreate', 'buttonName'=>'Incluir'])
+        @include('widgets.billingCycleForm',['urlAction'=>'/billingCycles/store', 'tab'=>'tabCreate', 'buttonName'=>'Incluir', 'readOnly'=>'false'])
     </div>

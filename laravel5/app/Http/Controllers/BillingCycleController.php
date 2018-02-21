@@ -29,9 +29,11 @@ class BillingCycleController extends Controller
        	return view('billingCycle', compact('billingCycle','tab'));
     }
 
-    public function remove($id){
+    public function findRemove($id){
 
-    	dd($id);
+        $tab = 'tabRemove';
+        $billingCycle = BillingCycle::find($id);
+        return view('billingCycle', compact('billingCycle','tab'));
     }
 
     public function addCreditRow(Request $request){
@@ -107,40 +109,70 @@ class BillingCycleController extends Controller
         return $this->index($tab, $billingCycle);        
     }
 
-
     public function store(Request $request){
 
-        $billingCycle = $this->fillBillingCycle($request->except('credits','debits'));
+        \DB::transaction(function() use ($request){
 
-        $billingCycle->save();
+            $billingCycle = $this->fillBillingCycle($request->except('credits','debits'));
 
-        $credits = $this->fillCredits($request->input('credits'));
-        $debits = $this->fillDebits($request->input('debits'));
+            $billingCycle->save();
 
-        if(isset($credits)){
-            $billingCycle->credits()->saveMany($credits);    
-        }
-        
-        if(isset($debits)){
-            $billingCycle->debits()->saveMany($debits);    
-        }
+            $credits = $this->fillCredits($request->input('credits'));
+            $debits = $this->fillDebits($request->input('debits'));
+
+            if(isset($credits)){
+                $billingCycle->credits()->saveMany($credits);    
+            }
+            
+            if(isset($debits)){
+                $billingCycle->debits()->saveMany($debits);    
+            }
+        });    
 
         return $this->index();
     }
-
 
     public function update(Request $request){
 
-        $billingCycle = $this->fillEntities($request);
+        \DB::transaction(function() use ($request) {
 
-        $credits = $this->fillCredits($request->input('credits'));
-        $debits = $this->fillDebits($request->input('debits'));
+            $billingCycleStored = BillingCycle::find($request->input('id'));
+            $this->fillBillingCycle($request->except('credits','debits'), $billingCycleStored);
+            $billingCycleStored->save();
 
-        $billingCycle->credits()->update($credits);
+            $credits = $this->fillCredits($request->input('credits'));
+            $debits = $this->fillDebits($request->input('debits'));
+
+            $billingCycleStored->credits()->delete();
+            $billingCycleStored->debits()->delete();
+
+            if(isset($credits)){
+                $billingCycleStored->credits()->saveMany($credits);    
+            }
+            
+            if(isset($debits)){
+                $billingCycleStored->debits()->saveMany($debits);    
+            }
+            
+        });
 
         return $this->index();
     }
 
+    public function remove($id){
+
+        \DB::transaction(function() use ($id){
+            
+            $billingCycleStored = BillingCycle::find($id);
+
+            $billingCycleStored->credits()->delete();
+            $billingCycleStored->debits()->delete();    
+            $billingCycleStored->delete();
+
+        });    
+
+        return $this->index();
+    }
 
 
     private function fillEntities($request){
@@ -153,9 +185,12 @@ class BillingCycleController extends Controller
         return $billingCycle;
     }
 
-    private function fillBillingCycle($billingCycleRequest){
-        $billingCycle = new BillingCycle;
-
+    private function fillBillingCycle($billingCycleRequest, $billingCycle = null){
+        
+        if(!isset($billingCycle)) {
+            $billingCycle = new BillingCycle;    
+        }
+        
         $billingCycle->fill($billingCycleRequest);
         $billingCycle->user_id = \Auth::id();
 

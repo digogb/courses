@@ -1,0 +1,1 @@
+<button formaction={{$action}} type="submit" class="{{$class}}" {{$disabled}}><i class="{{$icon}}"></i></a>

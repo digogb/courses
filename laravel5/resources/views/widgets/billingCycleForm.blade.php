@@ -1,13 +1,18 @@
+@php
+  $disabled = ($readOnly == 'true' ? 'disabled' : '');
+  $readOnly = ($readOnly == 'true' ? 'readonly' : '');
+@endphp
 <form action="{{$urlAction}}" method="POST">
 
         {{csrf_field()}}
+        <input type="hidden" name="id" value="{{$billingCycle->id}}">
         <input type="hidden" name="tab" value="{{$tab}}">
         <div class="box-body">
-            @include('widgets.field', ['cols'=>explodeDivColumns('12 4'), 'label'=>'Nome', 'name'=>'name', 'placeHolder'=>'Informe o  nome', 'fieldValue'=>$billingCycle->name, 'readOnly'=>'false'])
+            @include('widgets.field', ['cols'=>explodeDivColumns('12 4'), 'label'=>'Nome', 'name'=>'name', 'placeHolder'=>'Informe o  nome', 'fieldValue'=>$billingCycle->name, 'readOnly'=> $readOnly])
 
-            @include('widgets.field', ['cols'=>explodeDivColumns('12 4'), 'label'=>'Mês', 'name'=>'month', 'placeHolder'=>'Informe o mês', 'fieldValue'=>$billingCycle->month, 'readOnly'=>'false'])
+            @include('widgets.field', ['cols'=>explodeDivColumns('12 4'), 'label'=>'Mês', 'name'=>'month', 'placeHolder'=>'Informe o mês', 'fieldValue'=>$billingCycle->month, 'readOnly'=> $readOnly])
 
-            @include('widgets.field', ['cols'=>explodeDivColumns('12 4'), 'label'=>'Ano', 'name'=>'year', 'placeHolder'=>'Informe o ano', 'fieldValue'=>$billingCycle->year, 'readOnly'=>'false'])
+            @include('widgets.field', ['cols'=>explodeDivColumns('12 4'), 'label'=>'Ano', 'name'=>'year', 'placeHolder'=>'Informe o ano', 'fieldValue'=>$billingCycle->year, 'readOnly'=> $readOnly])
             <div class="col col-xs-12">
                 <fieldset>
                     <legend>Resumo</legend>
@@ -17,20 +22,17 @@
                         @include('widgets.value-box', ['cols'=>explodeDivColumns('12 4'), 'color'=>'blue', 'icon'=>'money', 'value'=>'R$ '. $billingCycle->getTotal(), 'text'=>'Valor Consolidado'])
                     </div>
                 </fieldset>
-            </div>   
+            </div>
 
             <div class="col col-xs-12 col-sm-6">
                 <fieldset>
-                  @include('widgets.creditsFieldset', ['billingCycle'=>$billingCycle, 'tab'=>'$tab'])
+                    @include('widgets.creditsFieldset', ['billingCycle'=>$billingCycle, 'tab'=>'$tab', 'readOnly'=>$readOnly, 'disabled'=>$disabled])
                 </fieldset>
-                <div class="row">
-
-                </div>
             </div>        
 
             <div class="col col-xs-12 col-sm-6">
                 <fieldset>
-                    @include('widgets.debitsFieldset', ['billingCycle'=>$billingCycle, 'tab'=>'$tab'])
+                    @include('widgets.debitsFieldset', ['billingCycle'=>$billingCycle, 'tab'=>'$tab', 'readOnly'=>$readOnly, 'disabled'=>$disabled])
                 </fieldset>
             </div>        
         </div>

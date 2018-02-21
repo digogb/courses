@@ -22,10 +22,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::get('/billingCycles','BillingCycleController@index');
-Route::get('/billingCycles/remove/{id}','BillingCycleController@remove');
 Route::get('/billingCycles/find/{id}','BillingCycleController@find');
+Route::get('/billingCycles/findRemove/{id}','BillingCycleController@findRemove');
 Route::post('/billingCycles/store','BillingCycleController@store');
 Route::post('/billingCycles/update','BillingCycleController@update');
+Route::post('/billingCycles/remove/{id}','BillingCycleController@remove');
 
 Route::post('/billingCycles/addCreditRow','BillingCycleController@addCreditRow');
 Route::post('/billingCycles/cloneCredit/{index}','BillingCycleController@cloneCredit');

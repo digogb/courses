@@ -13,24 +13,24 @@
     <tbody>
   @forelse($billingCycle->debits as $debit)         
       <tr>
-         <td>
-             <input name="debits[{{$loop->index}}][name]" class="form-control" placeholder="Informe o nome" value="{{$debit->name}}">
+         <td>             
+             @include('widgets.field', ['cols'=>explodeDivColumns('12'), 'name'=>'debits['.$loop->index.'][name]', 'placeHolder'=>'Informe o nome', 'fieldValue'=>$debit->name, 'readOnly'=> $readOnly])
          </td>
          <td>
-             <input name="debits[{{$loop->index}}][value]" class="form-control" placeholder="Informe o valor" value="{{$debit->value}}">   
+             @include('widgets.field', ['cols'=>explodeDivColumns('12'), 'name'=>'debits['.$loop->index.'][value]', 'placeHolder'=>'Informe o valor', 'fieldValue'=>$debit->value, 'readOnly'=> $readOnly])
          </td>
          <td>
-             <input name="debits[{{$loop->index}}][status]" class="form-control" placeholder="Informe o status" value="{{$debit->status}}">   
+             @include('widgets.field', ['cols'=>explodeDivColumns('12'), 'name'=>'debits['.$loop->index.'][status]', 'placeHolder'=>'Informe o status', 'fieldValue'=>$debit->status, 'readOnly'=> $readOnly])
          </td>                                    
          <td>
-             <button formaction="/billingCycles/addDebitRow" type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
-             <button formaction="/billingCycles/cloneDebit/{{$loop->index}}" type="submit" class="btn btn-warning"><i class="fa fa-clone"></i></button>
-             <button formaction="/billingCycles/remDebitRow/{{$loop->index}}" type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+            @include('widgets.actionButton', ['action'=>'/billingCycles/addDebitRow', 'class'=>'btn btn-success', 'disabled'=>$disabled, 'icon'=>'fa fa-plus'])
+            @include('widgets.actionButton', ['action'=>'/billingCycles/cloneDebit/'.$loop->index, 'class'=>'btn btn-warning', 'disabled'=>$disabled, 'icon'=>'fa fa-clone'])
+            @include('widgets.actionButton', ['action'=>'/billingCycles/remDebitRow/'.$loop->index, 'class'=>'btn btn-danger', 'disabled'=>$disabled, 'icon'=>'fa fa-trash-o'])
          </td>                                                              
       </tr>
    @empty
     <tr>
-      <button formaction="/billingCycles/addDebitRow" type="submit" class="btn btn-primary">Adicionar Débito</i></a>
+      <button formaction="/billingCycles/addDebitRow" type="submit" class="btn btn-primary" {{$disabled}}>Adicionar Débito</a>
     </tr>  
    @endforelse
     </tbody>

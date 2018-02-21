@@ -13,21 +13,21 @@
   @forelse($billingCycle->credits as $credit)         
     <tr>
        <td>
-           <input name="credits[{{$loop->index}}][name]" class="form-control" placeholder="Informe o nome" value="{{$credit->name}}">
+           @include('widgets.field', ['cols'=>explodeDivColumns('12'), 'name'=>'credits['.$loop->index.'][name]', 'placeHolder'=>'Informe o nome', 'fieldValue'=>$credit->name, 'readOnly'=> $readOnly])
        </td>
        <td>
-           <input name="credits[{{$loop->index}}][value]" class="form-control" placeholder="Informe o valor" value="{{$credit->value}}" >   
+           @include('widgets.field', ['cols'=>explodeDivColumns('12'), 'name'=>'credits['.$loop->index.'][value]', 'placeHolder'=>'Informe o valor', 'fieldValue'=>$credit->value, 'readOnly'=> $readOnly])
        </td>                  
        <td>
-           <button formaction="/billingCycles/addCreditRow" type="submit" class="btn btn-success"><i class="fa fa-plus"></i></a>
-           <button formaction="/billingCycles/cloneCredit/{{$loop->index}}" type="submit" class="btn btn-warning"><i class="fa fa-clone"></i></button>
-           <button formaction="/billingCycles/remCreditRow/{{$loop->index}}" type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+           @include('widgets.actionButton', ['action'=>'/billingCycles/addCreditRow', 'class'=>'btn btn-success', 'disabled'=>$disabled, 'icon'=>'fa fa-plus'])
+           @include('widgets.actionButton', ['action'=>'/billingCycles/cloneCredit/'.$loop->index, 'class'=>'btn btn-warning', 'disabled'=>$disabled, 'icon'=>'fa fa-clone'])
+           @include('widgets.actionButton', ['action'=>'/billingCycles/remCreditRow/'.$loop->index, 'class'=>'btn btn-danger', 'disabled'=>$disabled, 'icon'=>'fa fa-trash-o'])
        </td>
     </tr>
   @empty  
       <tr>
-        <button formaction="/billingCycles/addCreditRow" type="submit" class="btn btn-primary">Adicionar Crédito</i></a>
+        <button formaction="/billingCycles/addCreditRow" type="submit" class="btn btn-primary" {{$disabled}}>Adicionar Crédito</a>
       </tr>  
-    @endforelse
+  @endforelse
       </tbody>  
 </table>
