@@ -2,8 +2,16 @@
   $disabled = ($readOnly == 'true' ? 'disabled' : '');
   $readOnly = ($readOnly == 'true' ? 'readonly' : '');
 @endphp
-<form action="{{$urlAction}}" method="POST">
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+{{ Form::open(['url' => $urlAction, 'method' => 'post'])}}
         {{csrf_field()}}
         <input type="hidden" name="id" value="{{$billingCycle->id}}">
         <input type="hidden" name="tab" value="{{$tab}}">
@@ -40,4 +48,4 @@
             <button type="submit" class="btn btn-primary">{{$buttonName}}</button>
             <button formaction="/billingCycles/" type="submit" class="btn btn-default">Cancelar</button>
         </div>    
-    </form>
+{{ Form::close()}}

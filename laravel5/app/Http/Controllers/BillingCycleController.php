@@ -36,6 +36,13 @@ class BillingCycleController extends Controller
         return view('billingCycle', compact('billingCycle','tab'));
     }
 
+    public function create(){
+
+        $tab = 'tabCreate';
+        $billingCycle = new BillingCycle;
+        return view('billingCycle', compact('billingCycle','tab'));           
+    }
+
     public function addCreditRow(Request $request){
 
         $tab = $request->input('tab');
@@ -111,25 +118,35 @@ class BillingCycleController extends Controller
 
     public function store(Request $request){
 
-        \DB::transaction(function() use ($request){
+        $validate = $this->validateRequest($request);
 
-            $billingCycle = $this->fillBillingCycle($request->except('credits','debits'));
+        if(!$validate->fails()) {
 
-            $billingCycle->save();
+            \DB::transaction(function() use ($request){
 
-            $credits = $this->fillCredits($request->input('credits'));
-            $debits = $this->fillDebits($request->input('debits'));
+                $billingCycle = $this->fillBillingCycle($request->except('credits','debits'));
 
-            if(isset($credits)){
-                $billingCycle->credits()->saveMany($credits);    
-            }
-            
-            if(isset($debits)){
-                $billingCycle->debits()->saveMany($debits);    
-            }
-        });    
+                $billingCycle->save();
 
-        return $this->index();
+                $credits = $this->fillCredits($request->input('credits'));
+                $debits = $this->fillDebits($request->input('debits'));
+
+                if(isset($credits)){
+                    $billingCycle->credits()->saveMany($credits);    
+                }
+                
+                if(isset($debits)){
+                    $billingCycle->debits()->saveMany($debits);    
+                }
+            });    
+
+            return $this->index();
+
+        } else {
+            return redirect('billingCycles/create')
+                        ->withErrors($validate)
+                        ->withInput();
+        }   
     }
 
     public function update(Request $request){
@@ -223,4 +240,22 @@ class BillingCycleController extends Controller
         }
         return $debitsPopulated;
     }    
+
+    private function validateRequest($request){
+
+        $validator = \Validator::make($request->all(),[
+            'name' => 'required',
+            'month' => 'required|numeric',
+            'year' => 'required|numeric',
+
+            'credits.*.name' => 'required',
+            'credits.*.value' => 'required|numeric',
+
+            'debits.*.name' => 'required',
+            'debits.*.value' => 'required|numeric',
+            'debits.*.status' => 'required'
+        ]);
+
+        return $validator;      
+    }
 }

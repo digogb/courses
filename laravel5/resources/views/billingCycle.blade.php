@@ -30,8 +30,10 @@
                 @endif        
             </ul>
             <div class='tab-content'>
-                @if($tab != 'tabUpdate' && $tab != 'tabRemove') 
+                @if($tab == 'tabList') 
                     @include('widgets.tabList',[ 'tab'=> $tab , 'billingCycles' => $billingCycles])
+                @endif    
+                @if($tab == 'tabList' or $tab == 'tabCreate') 
                     @include('widgets.tabCreate',[ 'tab'=> $tab, 'billingCycle' => $billingCycle])
                 @endif    
                 @if($tab == 'tabUpdate')    
