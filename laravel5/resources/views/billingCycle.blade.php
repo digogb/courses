@@ -30,6 +30,7 @@
                 @endif        
             </ul>
             <div class='tab-content'>
+                @include('widgets.flash-message')
                 @if($tab == 'tabList') 
                     @include('widgets.tabList',[ 'tab'=> $tab , 'billingCycles' => $billingCycles])
                 @endif    

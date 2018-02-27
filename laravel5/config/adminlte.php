@@ -162,5 +162,6 @@ return [
 
     'plugins' => [
         'datatables' => true,
+        'javascript' => true,
     ],
 ];

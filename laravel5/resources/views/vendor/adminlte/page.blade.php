@@ -144,8 +144,6 @@
     @yield('js')
 @stop
 
-
-
 <style type="text/css">
 
 

@@ -36,10 +36,14 @@ class BillingCycleController extends Controller
         return view('billingCycle', compact('billingCycle','tab'));
     }
 
-    public function create(){
+    public function create(Request $request){
 
-        $tab = 'tabCreate';
+        $tab = $request->old('tab');
         $billingCycle = new BillingCycle;
+        $billingCycle->id = $request->old('id');
+        $billingCycle->credits = collect($this->fillCredits($request->old('credits')));
+        $billingCycle->debits = collect($this->fillDebits($request->old('debits')));
+
         return view('billingCycle', compact('billingCycle','tab'));           
     }
 
@@ -140,7 +144,7 @@ class BillingCycleController extends Controller
                 }
             });    
 
-            return $this->index();
+            return redirect('billingCycles')->with('success','Ciclo de pagamento criado com sucesso!');
 
         } else {
             return redirect('billingCycles/create')
@@ -151,29 +155,40 @@ class BillingCycleController extends Controller
 
     public function update(Request $request){
 
-        \DB::transaction(function() use ($request) {
+        $validate = $this->validateRequest($request);
 
-            $billingCycleStored = BillingCycle::find($request->input('id'));
-            $this->fillBillingCycle($request->except('credits','debits'), $billingCycleStored);
-            $billingCycleStored->save();
+        if(!$validate->fails()) {
 
-            $credits = $this->fillCredits($request->input('credits'));
-            $debits = $this->fillDebits($request->input('debits'));
+            \DB::transaction(function() use ($request) {
 
-            $billingCycleStored->credits()->delete();
-            $billingCycleStored->debits()->delete();
+                $billingCycleStored = BillingCycle::find($request->input('id'));
+                $this->fillBillingCycle($request->except('credits','debits'), $billingCycleStored);
 
-            if(isset($credits)){
-                $billingCycleStored->credits()->saveMany($credits);    
-            }
-            
-            if(isset($debits)){
-                $billingCycleStored->debits()->saveMany($debits);    
-            }
-            
-        });
+                $billingCycleStored->save();
 
-        return $this->index();
+                $credits = $this->fillCredits($request->input('credits'));
+                $debits = $this->fillDebits($request->input('debits'));
+
+                $billingCycleStored->credits()->delete();
+                $billingCycleStored->debits()->delete();
+
+                if(isset($credits)){
+                    $billingCycleStored->credits()->saveMany($credits);    
+                }
+                
+                if(isset($debits)){
+                    $billingCycleStored->debits()->saveMany($debits);    
+                }
+                
+            });
+
+            return redirect('billingCycles')->with('success','Ciclo de pagamento atualizado com sucesso!');
+
+        } else {
+            return redirect('billingCycles/create')
+                        ->withErrors($validate)
+                        ->withInput();
+        }   
     }
 
     public function remove($id){
@@ -188,7 +203,7 @@ class BillingCycleController extends Controller
 
         });    
 
-        return $this->index();
+        return redirect('billingCycles')->with('success','Ciclo de pagamento removido com sucesso!');
     }
 
 
