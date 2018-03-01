@@ -14,7 +14,7 @@ return [
     */
 
     'required' => 'O campo :attribute deve ser preenchido.',
-    "numeric"  => "O campo :attribute deve ser numérico.",
+    "numeric"  => "O campo :attribute deve ser numérico.",    
 
 
     /*
@@ -44,7 +44,8 @@ return [
             'numeric' => 'Cada campo valor de débito deve ser numérico.'
         ],
         'debits.*.status' => [
-            'required' => 'Cada campo status de débito deve ser preenchido.'
+            'required' => 'Cada campo status de débito deve ser preenchido.',
+            'in' => 'Cada campo status de débito deve ser preenchido com os valores "Pendente" ou "Pago"'
         ],
     ],
 

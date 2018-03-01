@@ -127,7 +127,7 @@
         <!-- /.content-wrapper -->
 
         <footer class="main-footer">
-            <strong>Copyright © 2017
+            <strong>Copyright © 2018
                 <a href="http://cod3r.com.br" target="_blank"> Cod3r</a>.
             </strong>
         </footer>
@@ -143,17 +143,3 @@
     @stack('js')
     @yield('js')
 @stop
-
-<style type="text/css">
-
-
-    .table-actions {
-         width:150px;
-    }
-
-    button {
-         margin-left: 5px;
-    }
-
-
-</style>

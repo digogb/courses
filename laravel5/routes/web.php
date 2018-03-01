@@ -24,7 +24,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('/billingCycles','BillingCycleController@index');
 Route::get('/billingCycles/find/{id}','BillingCycleController@find');
 Route::get('/billingCycles/findRemove/{id}','BillingCycleController@findRemove');
-Route::get('/billingCycles/create','BillingCycleController@create');
+Route::get('/billingCycles/createOrUpdate','BillingCycleController@createOrUpdate');
 Route::post('/billingCycles/store','BillingCycleController@store');
 Route::post('/billingCycles/update','BillingCycleController@update');
 Route::post('/billingCycles/remove/{id}','BillingCycleController@remove');

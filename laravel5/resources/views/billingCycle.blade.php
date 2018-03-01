@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <div class="row">
+    <div class="row content-row">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs"> 
                 @if( $tab != 'tabUpdate' && $tab != 'tabRemove')
@@ -46,5 +46,9 @@
             </div>
         </div>
 	</div>
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/custom.css">
 @stop
 

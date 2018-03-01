@@ -36,7 +36,7 @@ class BillingCycleController extends Controller
         return view('billingCycle', compact('billingCycle','tab'));
     }
 
-    public function create(Request $request){
+    public function createOrUpdate(Request $request){
 
         $tab = $request->old('tab');
         $billingCycle = new BillingCycle;
@@ -147,7 +147,7 @@ class BillingCycleController extends Controller
             return redirect('billingCycles')->with('success','Ciclo de pagamento criado com sucesso!');
 
         } else {
-            return redirect('billingCycles/create')
+            return redirect('billingCycles/createOrUpdate')
                         ->withErrors($validate)
                         ->withInput();
         }   
@@ -185,7 +185,7 @@ class BillingCycleController extends Controller
             return redirect('billingCycles')->with('success','Ciclo de pagamento atualizado com sucesso!');
 
         } else {
-            return redirect('billingCycles/create')
+            return redirect('billingCycles/createOrUpdate')
                         ->withErrors($validate)
                         ->withInput();
         }   
@@ -268,7 +268,7 @@ class BillingCycleController extends Controller
 
             'debits.*.name' => 'required',
             'debits.*.value' => 'required|numeric',
-            'debits.*.status' => 'required'
+            'debits.*.status' => 'required|in:Pendente,Pago',
         ]);
 
         return $validator;      

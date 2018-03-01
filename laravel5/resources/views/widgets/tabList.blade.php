@@ -4,7 +4,7 @@
     <div class="tab-pane"  id="tabList">
 @endif
     <div>
-        <table class="table table-bordered">
+        <table class="table ">
             <thead>
                 <tr>
                     <th>Nome</th>
